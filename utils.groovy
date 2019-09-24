@@ -32,6 +32,7 @@ def getReposList(String branch = 'master')
     repos.add('dictionaries')
     repos.add('document-server-integration')
     repos.add('document-server-package')
+    repos.add('r7')
     repos.add('sdkjs')
     repos.add('sdkjs-plugins')
     repos.add('server')
@@ -43,7 +44,16 @@ def getReposList(String branch = 'master')
 def checkoutRepos(String branch = 'master')
 {    
     for (repo in getReposList()) {
-        checkoutRepo(repo, branch)
+        switch(repo) {
+            case 'r7':
+                checkoutRepo(repo, 'master', 'ASC-OFFICE')
+                break
+            case 'web-apps-pro':
+                checkoutRepo(repo, branch, 'ASC-OFFICE')
+                break
+            default:
+                checkoutRepo(repo, branch)
+            break
     }
 
     return this
@@ -74,16 +84,20 @@ def linuxBuild(String branch = 'master')
         make clean && \
         make all"
     sh "cd server && \
+        export BRANDING_DIR=../r7/server && \
         make clean && \
         make all ext"
     sh "cd document-server-integration && \
         make all"
     sh "cd document-server-package && \
+        export BRANDING_DIR=../r7/document-server-package && \
         make clean && \
         make deploy"
+    /*
     sh "cd Docker-DocumentServer && \
         make clean && \
         make deploy"
+    */
     return this
 }
 
@@ -104,6 +118,7 @@ def windowsBuild(String branch = 'master')
             mingw32-make all"
 
     bat "cd server && \
+            set BRANDING_DIR=../r7/server && \
             mingw32-make clean && \
             mingw32-make all ext"
 
@@ -111,6 +126,7 @@ def windowsBuild(String branch = 'master')
             mingw32-make all"
 
     bat "cd document-server-package && \
+            set BRANDING_DIR=%WORKSPACE%/r7/document-sever-package && \
             mingw32-make clean && \
             mingw32-make deploy"
 }

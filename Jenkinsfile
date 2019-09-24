@@ -35,12 +35,16 @@ pipeline {
       steps {
         script {
           def branchName = env.BRANCH_NAME
-          def productVersion = "5.3.99"
-          def pV = branchName =~ /^(release|hotfix)\\/v(.*)$/
+          def productVersion = "1.3.99"
+          def pV = branchName =~ /^(release|hotfix)\\/v[\d]+.(.*)$/
           if(pV.find()) {
-            productVersion = pV.group(2)
+            productVersion = "1." + pV.group(2)
           }
           env.PRODUCT_VERSION = productVersion
+          env.COMPANY_NAME = "R7-Office"
+          env.PUBLISHER_URL = "http://r7-office.ru/"
+          env.SUPPORT_MAIL = "support@r7-office.ru"
+          env.SUPPORT_URL = "http://helpcenter.r7-office.ru"
         }
       }
     }
@@ -48,13 +52,18 @@ pipeline {
       parallel {
         stage('DocumentServer-IE(linux_64) build') {
           agent { label 'linux_64' }
-          environment { PRODUCT_NAME = "documentserver-ie" }
+          environment {
+            PRODUCT_NAME = "documentserver-ie"
+            PUBLISHER_NAME = "AO \\\"NOVYE KOMMUNIKACIONNYE TEHNOLOGII\\\""
+          }
           steps {
             script {
               def utils = load "utils.groovy"
               if ( params.linux_64 && params.documentserver_ie) {
                 utils.linuxBuild(env.BRANCH_NAME)
+                /*
                 utils.tagRepos("v${env.PRODUCT_VERSION}.${env.BUILD_NUMBER}")
+                */
               }
             }
           }
@@ -87,7 +96,7 @@ pipeline {
           agent {
             node {
               label 'win_64'
-              customWorkspace "C:\\ds\\${env.BRANCH_NAME}\\os"
+              customWorkspace "C:\\rds\\${env.BRANCH_NAME}\\os"
             }
           }
           environment { PRODUCT_NAME = "DocumentServer" }
@@ -104,7 +113,7 @@ pipeline {
           agent {
             node {
               label 'win_64'
-              customWorkspace "C:\\ds\\${env.BRANCH_NAME}\\de"
+              customWorkspace "C:\\rds\\${env.BRANCH_NAME}\\de"
             }
           }
           environment { PRODUCT_NAME = "DocumentServer-DE" }
@@ -121,10 +130,13 @@ pipeline {
           agent {
             node {
               label 'win_64'
-              customWorkspace "C:\\ds\\${env.BRANCH_NAME}\\ie"
+              customWorkspace "C:\\rds\\${env.BRANCH_NAME}\\ie"
             }
           }
-          environment { PRODUCT_NAME = "DocumentServer-IE" }
+          environment {
+            PRODUCT_NAME = "DocumentServer-IE"
+            PUBLISHER_NAME = "AO \\\"\\\"NOVYE KOMMUNIKACIONNYE TEHNOLOGII\\\"\\\""
+          }
           steps {
             script {
               def utils = load "utils.groovy"
