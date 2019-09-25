@@ -54,6 +54,7 @@ def checkoutRepos(String branch = 'master')
             default:
                 checkoutRepo(repo, branch)
             break
+        }
     }
 
     return this
