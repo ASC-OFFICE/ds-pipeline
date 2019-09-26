@@ -119,7 +119,7 @@ def windowsBuild(String branch = 'master')
             mingw32-make all"
 
     bat "cd server && \
-            set "BRANDING_DIR=../r7/server" && \
+            set \"BRANDING_DIR=../r7/server\" && \
             mingw32-make clean && \
             mingw32-make all ext"
 
@@ -127,7 +127,7 @@ def windowsBuild(String branch = 'master')
             mingw32-make all"
 
     bat "cd document-server-package && \
-            set "BRANDING_DIR=%WORKSPACE%/r7/document-sever-package" && \
+            set \"BRANDING_DIR=%WORKSPACE%/r7/document-sever-package\" && \
             mingw32-make clean && \
             mingw32-make deploy"
 }
