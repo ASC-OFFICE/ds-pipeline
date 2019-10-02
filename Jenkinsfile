@@ -35,10 +35,10 @@ pipeline {
       steps {
         script {
           def branchName = env.BRANCH_NAME
-          def productVersion = "1.3.99"
-          def pV = branchName =~ /^(release|hotfix)\\/v[\d]+.(.*)$/
+          def productVersion = "5.3.99"
+          def pV = branchName =~ /^(release|hotfix)\\/v(.*)$/
           if(pV.find()) {
-            productVersion = "1." + pV.group(2)
+            productVersion = pV.group(2)
           }
           env.PRODUCT_VERSION = productVersion
           env.COMPANY_NAME = "R7-Office"
