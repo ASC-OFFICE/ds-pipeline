@@ -41,10 +41,20 @@ pipeline {
             productVersion = pV.group(2)
           }
           env.PRODUCT_VERSION = productVersion
-          env.COMPANY_NAME = "R7-Office"
+          env.APP_TITLE_TEXT = "Р7-Офис"
+          env.API_URL_EDITING_CALLBACK = "http://helpcenter.r7-office.ru/api/editors/callback.aspx"
+          env.COEDITING_DESKTOP = "Совместная работа"
+          env.PLUGIN_LINK = "http://helpcenter.r7-office.ru/api/plugins/index.aspx"
+          env.PLUGIN_LINK_MACROS = "http://helpcenter.r7-office.ru/api/plugins/macros.aspx"
+          env.HELP_URL = "http://helpcenter.r7-office.ru"
+          env.PUBLISHER_ADDRESS = "Россия, 603152, г. Нижний Новгород, ул. Ларина, д. 22 лит. Д."
+          env.PUBLISHER_PHONE = "+7 831 422 48 30"
           env.PUBLISHER_URL = "http://r7-office.ru/"
+          env.SUPPORT_EMAIL = "support@r7-office.ru"
           env.SUPPORT_MAIL = "support@r7-office.ru"
           env.SUPPORT_URL = "http://helpcenter.r7-office.ru"
+          env.SALES_EMAIL = "sales@r7-office.ru"
+          env.COMPANY_NAME = "R7-Office"
         }
       }
     }
@@ -55,6 +65,7 @@ pipeline {
           environment {
             PRODUCT_NAME = "documentserver-ie"
             PUBLISHER_NAME = "AO \\\"NOVYE KOMMUNIKACIONNYE TEHNOLOGII\\\""
+            APP_COPYRIGHT = "Copyright (C) \\\"NOVYE KOMMUNIKACIONNYE TEHNOLOGII\\\" 2019. All rights reserved"
           }
           steps {
             script {
@@ -135,7 +146,8 @@ pipeline {
           }
           environment {
             PRODUCT_NAME = "DocumentServer-IE"
-            PUBLISHER_NAME = "AO \\\"\\\"NOVYE KOMMUNIKACIONNYE TEHNOLOGII\\\"\\\""
+            PUBLISHER_NAME = "AO \\\"NOVYE KOMMUNIKACIONNYE TEHNOLOGII\\\""
+            APP_COPYRIGHT = "Copyright (C) AO \\\"NOVYE KOMMUNIKACIONNYE TEHNOLOGII\\\" 2019. All rights reserved"
           }
           steps {
             script {
