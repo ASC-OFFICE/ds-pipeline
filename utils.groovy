@@ -115,7 +115,7 @@ def windowsBuild(String branch = 'master')
             mingw32-make clean && \
             mingw32-make all ext"
 
-    bat "cd sdkjs && \
+    sh "cd sdkjs && \
             mingw32-make clean && \
             mingw32-make all"
 
