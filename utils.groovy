@@ -119,7 +119,7 @@ def windowsBuild(String branch = 'master')
             mingw32-make clean && \
             mingw32-make all"
 
-    bat "cd web-apps-pro\build && \
+    bat "cd web-apps-pro\\build && \
             grunt"
 
     bat "cd server && \
