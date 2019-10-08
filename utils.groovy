@@ -115,9 +115,12 @@ def windowsBuild(String branch = 'master')
             mingw32-make clean && \
             mingw32-make all ext"
 
-    sh "cd sdkjs && \
+    bat "cd sdkjs && \
             mingw32-make clean && \
             mingw32-make all"
+
+    bat "cd web-apps-pro\build && \
+            grunt"
 
     bat "cd server && \
             set \"BRANDING_DIR=../r7/server\" && \
