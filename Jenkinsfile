@@ -41,6 +41,20 @@ pipeline {
             productVersion = pV.group(2)
           }
           env.PRODUCT_VERSION = productVersion
+          env.APP_TITLE_TEXT = "Р7-Офис"
+          env.API_URL_EDITING_CALLBACK = "http://helpcenter.r7-office.ru/api/editors/callback.aspx"
+          env.COEDITING_DESKTOP = "Совместная работа"
+          env.PLUGIN_LINK = "http://helpcenter.r7-office.ru/api/plugins/index.aspx"
+          env.PLUGIN_LINK_MACROS = "http://helpcenter.r7-office.ru/api/plugins/macros.aspx"
+          env.HELP_URL = "http://helpcenter.r7-office.ru"
+          env.PUBLISHER_ADDRESS = "Россия, 603152, г. Нижний Новгород, ул. Ларина, д. 22 лит. Д."
+          env.PUBLISHER_PHONE = "+7 831 422 48 30"
+          env.PUBLISHER_URL = "http://r7-office.ru/"
+          env.SUPPORT_EMAIL = "support@r7-office.ru"
+          env.SUPPORT_MAIL = "support@r7-office.ru"
+          env.SUPPORT_URL = "http://helpcenter.r7-office.ru"
+          env.SALES_EMAIL = "sales@r7-office.ru"
+          env.COMPANY_NAME = "R7-Office"
         }
       }
     }
@@ -48,13 +62,19 @@ pipeline {
       parallel {
         stage('DocumentServer-IE(linux_64) build') {
           agent { label 'linux_64' }
-          environment { PRODUCT_NAME = "documentserver-ie" }
+          environment {
+            PRODUCT_NAME = "documentserver-ie"
+            PUBLISHER_NAME = "AO \\\"NOVYE KOMMUNIKACIONNYE TEHNOLOGII\\\""
+            APP_COPYRIGHT = "Copyright (C) \\\"NOVYE KOMMUNIKACIONNYE TEHNOLOGII\\\" 2019. All rights reserved"
+          }
           steps {
             script {
               def utils = load "utils.groovy"
               if ( params.linux_64 && params.documentserver_ie) {
                 utils.linuxBuild(env.BRANCH_NAME)
+                /*
                 utils.tagRepos("v${env.PRODUCT_VERSION}.${env.BUILD_NUMBER}")
+                */
               }
             }
           }
@@ -87,7 +107,7 @@ pipeline {
           agent {
             node {
               label 'win_64'
-              customWorkspace "C:\\ds\\${env.BRANCH_NAME}\\os"
+              customWorkspace "C:\\rds\\${env.BRANCH_NAME}\\os"
             }
           }
           environment { PRODUCT_NAME = "DocumentServer" }
@@ -104,7 +124,7 @@ pipeline {
           agent {
             node {
               label 'win_64'
-              customWorkspace "C:\\ds\\${env.BRANCH_NAME}\\de"
+              customWorkspace "C:\\rds\\${env.BRANCH_NAME}\\de"
             }
           }
           environment { PRODUCT_NAME = "DocumentServer-DE" }
@@ -121,10 +141,14 @@ pipeline {
           agent {
             node {
               label 'win_64'
-              customWorkspace "C:\\ds\\${env.BRANCH_NAME}\\ie"
+              customWorkspace "C:\\rds\\${env.BRANCH_NAME}\\ie"
             }
           }
-          environment { PRODUCT_NAME = "DocumentServer-IE" }
+          environment {
+            PRODUCT_NAME = "DocumentServer-IE"
+            PUBLISHER_NAME = "AO \\\"NOVYE KOMMUNIKACIONNYE TEHNOLOGII\\\""
+            APP_COPYRIGHT = "Copyright (C) AO \\\"NOVYE KOMMUNIKACIONNYE TEHNOLOGII\\\" 2019. All rights reserved"
+          }
           steps {
             script {
               def utils = load "utils.groovy"
