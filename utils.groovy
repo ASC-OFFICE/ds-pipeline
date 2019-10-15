@@ -110,6 +110,7 @@ def windowsBuild(String branch = 'master')
             call make.bat"
 
     bat "cd core && \
+            set PUBLISHER_NAME=AO \\\"\\\"NOVYE KOMMUNIKACIONNYE TEHNOLOGII\\\"\\\" && \
             call \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\vcvarsall.bat\" x64 10.0.14393.0 && \
             mingw32-make clean && \
             mingw32-make all ext"
@@ -117,6 +118,9 @@ def windowsBuild(String branch = 'master')
     bat "cd sdkjs && \
             mingw32-make clean && \
             mingw32-make all"
+
+    bat "cd web-apps-pro\\build && \
+            grunt"
 
     bat "cd server && \
             set \"BRANDING_DIR=../r7/server\" && \
